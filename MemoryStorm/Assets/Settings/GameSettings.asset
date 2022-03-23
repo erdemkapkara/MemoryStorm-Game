@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   time: 180
+  difficulty: Hard
+  imageCount: 16

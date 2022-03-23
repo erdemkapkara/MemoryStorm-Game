@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec9ac39dd2cc5b449e5e1252f1f7220, type: 3}
   m_Name: Level 4
   m_EditorClassIdentifier: 
-  time: 180
+  time: 90
+  difficulty: Medium
+  imageCount: 36

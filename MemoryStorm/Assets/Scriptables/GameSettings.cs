@@ -7,5 +7,6 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {
     [SerializeField] internal float time = 180;
-    //[SerializeField] internal int imageCount = 36;
+    [SerializeField] internal string difficulty = "Hard";
+    [SerializeField] internal int imageCount = 36;
 }

@@ -7,9 +7,8 @@ using UnityEngine.UI;
 
 public class GameController: MonoBehaviour
 {
-
     //-----------------------
-    public int mainGoal;
+    int mainGoal;
     int firstChooseValue;
     int instantAchievement;    
     //-----------------------
@@ -20,6 +19,7 @@ public class GameController: MonoBehaviour
     public AudioSource[] voices;
     public GameObject[] buttons;
     public TextMeshProUGUI counter;
+    public TextMeshProUGUI levelText;
     public GameObject[] endPannels;    
     public GameObject Grid;    
     public GameObject pool;
@@ -32,17 +32,18 @@ public class GameController: MonoBehaviour
     bool addStation;
     int addCount;
     int totalImageCount;
-    int levelCount;
+    int levelCount = 1;
+    string isDifficult;
     //-----------------------  
 
     void Start()
     {
-        levelCount = 1;
+        mainGoal = pool.transform.childCount/2;
         firstChooseValue = 0;
         timer = true;
         addStation = true;
         addCount = 0;
-        totalImageCount = pool.transform.childCount;
+        totalImageCount =pool.transform.childCount;
         StartCoroutine(Create()); 
     }
     private void Update()
@@ -95,19 +96,28 @@ public class GameController: MonoBehaviour
         SceneManager.LoadScene("MainMenu");
 
     }
-
-    public void PlayAgain()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-      
-    }
     
-    public void NextLevel(int levelcount)
+    public void NextLevel()
     {
         foreach(var item in Levels)
         {
             totalTime = item.time;
+            isDifficult = item.difficulty;
+            totalImageCount = item.imageCount;
         }
+        if (isDifficult == "medium")
+        {
+            SceneManager.LoadScene(2);
+        }
+        else if (isDifficult == "hard")
+        {
+            SceneManager.LoadScene(3);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        levelText.text = "Level"+" "+levelCount.ToString();
     }
 
     public void GiveObject(GameObject myObject) 
@@ -172,6 +182,8 @@ public class GameController: MonoBehaviour
             if (mainGoal == instantAchievement)
             {
                 Win();
+                levelCount++;
+                NextLevel();
 
             }
         }
