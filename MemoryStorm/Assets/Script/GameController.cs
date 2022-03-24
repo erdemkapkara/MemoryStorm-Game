@@ -26,26 +26,45 @@ public class GameController: MonoBehaviour
     public GameSettings[] Levels;
     //-----------------------
     public float totalTime = 180;
+    public static int levelCount =1;
+    public static int sceneCount = 1;
     float minute;
     float second;
     bool timer;
     bool addStation;
     int addCount;
     int totalImageCount;
-    int levelCount = 1;
     string isDifficult;
+
     //-----------------------  
 
     void Start()
     {
-        mainGoal = pool.transform.childCount/2;
+        mainGoal =pool.transform.childCount/2;
         firstChooseValue = 0;
         timer = true;
         addStation = true;
         addCount = 0;
         totalImageCount =pool.transform.childCount;
-        StartCoroutine(Create()); 
+        StartCoroutine(Create());
+        levelText.text = "Level" + " " + levelCount.ToString();
+        totalTime = Levels[levelCount-1].time;
+        isDifficult = Levels[levelCount-1].difficulty;
+        totalImageCount = Levels[levelCount-1].imageCount;
+        //if (levelCount < 4)
+        //{
+        //    sceneCount = 1;
+        //}
+        //if (levelCount >= 4 && levelCount<8)
+        //{
+        //    sceneCount = 2;
+        //}
+        //if (levelCount >8)
+        //{
+        //    sceneCount = 3;
+        //}
     }
+
     private void Update()
     {
         if (timer && totalTime>1)
@@ -67,7 +86,7 @@ public class GameController: MonoBehaviour
             timer = false;
             GameOver();
         }
-       
+
     }
     public void StopGame()
     {
@@ -84,12 +103,11 @@ public class GameController: MonoBehaviour
     void GameOver()
     {
         endPannels[0].SetActive(true);
-
+         
     }
     void Win()
     {
         endPannels[1].SetActive(true);
-
     }
     public void MainMenu()
     {
@@ -99,25 +117,32 @@ public class GameController: MonoBehaviour
     
     public void NextLevel()
     {
-        foreach(var item in Levels)
+        //foreach (var item in Levels)
+        //{
+        //    totalTime = item.time;
+        //    isDifficult = item.difficulty;
+        //    totalImageCount = item.imageCount;
+        //}
+
+        levelCount++;
+        totalTime = Levels[levelCount-1].time;
+        isDifficult = Levels[levelCount-1].difficulty;
+        totalImageCount = Levels[levelCount-1].imageCount;
+
+        if (isDifficult == "Easy")
         {
-            totalTime = item.time;
-            isDifficult = item.difficulty;
-            totalImageCount = item.imageCount;
+            SceneManager.LoadScene(1);
         }
-        if (isDifficult == "medium")
+
+        else if (isDifficult == "Medium")
         {
             SceneManager.LoadScene(2);
         }
-        else if (isDifficult == "hard")
+
+        else if (isDifficult == "Hard")
         {
             SceneManager.LoadScene(3);
         }
-        else
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-        levelText.text = "Level"+" "+levelCount.ToString();
     }
 
     public void GiveObject(GameObject myObject) 
@@ -173,8 +198,6 @@ public class GameController: MonoBehaviour
             instantAchievement++;
             choosenButton.GetComponent<Image>().enabled = false;
             selfButton.GetComponent<Image>().enabled = false;
-            // choosenButton.GetComponent<Button>().enabled = false;
-            // selfButton.GetComponent<Button>().enabled = false;
             firstChooseValue = 0;
             choosenButton = null;
             ButtonSit(true);
@@ -182,9 +205,6 @@ public class GameController: MonoBehaviour
             if (mainGoal == instantAchievement)
             {
                 Win();
-                levelCount++;
-                NextLevel();
-
             }
         }
         else

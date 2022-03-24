@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    
     public GameObject ExitPannel;
     private void Start()
     {
@@ -21,7 +20,6 @@ public class MainMenuController : MonoBehaviour
     }
     public void Answer(string answer)
     {
-
         if (answer == "Yes")
         {
             Application.Quit();
@@ -31,15 +29,12 @@ public class MainMenuController : MonoBehaviour
             ExitPannel.SetActive(false);
 
         }
-
-        
-
     }
 
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
-     // SceneManager.LoadScene(PlayerPrefs.GetInt("KaldigiBolum")); // kaldığı devam etmesini sağlıcam
+        SceneManager.LoadScene(GameController.sceneCount);
+        //SceneManager.LoadScene(PlayerPrefs.GetInt("KaldigiBolum")); // kaldığı devam etmesini sağlıcam
     }
 }

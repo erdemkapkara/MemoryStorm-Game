@@ -10,3 +10,4 @@ public class GameSettings : ScriptableObject
     [SerializeField] internal string difficulty = "Hard";
     [SerializeField] internal int imageCount = 36;
 }
+
